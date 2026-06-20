@@ -10,6 +10,7 @@ import {
 import { type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { logoSrc } from "../components/site-logo";
 
 function NotFoundComponent() {
   return (
@@ -83,6 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:description", content: "Practice Arabic vocabulary by typing or speaking." },
     ],
     links: [
+      { rel: "icon", href: logoSrc, type: "image/png" },
       {
         rel: "stylesheet",
         href: appCss,

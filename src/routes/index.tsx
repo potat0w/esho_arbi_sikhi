@@ -8,6 +8,7 @@ import { Input } from "../components/ui/input";
 import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { SiteFooter } from "../components/site-footer";
+import { SiteLogo } from "../components/site-logo";
 import {
   Mic, MicOff, Send, SkipForward, RotateCcw, Check, X,
   Flame, Trophy, Volume2, Sparkles, Target, Award, Home,
@@ -332,9 +333,7 @@ function MenuScreen({ stats, onStart, onReset }: { stats: Stats; onStart: (lengt
 
         <div className="relative mx-auto w-full max-w-5xl">
           <nav className="mb-8 flex flex-wrap items-center justify-between gap-3 sm:mb-10">
-            <span className="font-bangla-script text-2xl leading-none text-primary-foreground sm:text-3xl">
-              এসো আরবি শিখি
-            </span>
+            <SiteLogo />
             <div className="flex flex-wrap items-center gap-3 sm:gap-4">
               <div className="hidden items-center gap-4 text-sm text-primary-foreground/80 min-[480px]:flex">
                 <a href="#features" className="transition hover:text-primary-foreground">বৈশিষ্ট্য</a>
@@ -467,11 +466,11 @@ function MenuScreen({ stats, onStart, onReset }: { stats: Stats; onStart: (lengt
       </section>
 
       {/* Progress */}
-      <section id="progress" className="mx-auto w-full max-w-5xl scroll-mt-6 px-3 sm:px-4">
-        <Card className="border-0 p-4 shadow-sm sm:p-6" style={{ background: "var(--gradient-card)" }}>
+      <section id="progress" className="scroll-mt-6 border-y bg-secondary/30">
+        <div className="mx-auto w-full max-w-5xl px-3 py-10 sm:px-4 sm:py-12">
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
-              <p className="font-arabic text-lg font-bold text-primary" dir="rtl">إِحْصَائِيَّاتُك</p>
+              <p className="font-arabic text-lg font-bold text-primary sm:text-xl" dir="rtl">إِحْصَائِيَّاتُك</p>
               <p className="text-sm font-medium text-muted-foreground">আপনার অগ্রগতি</p>
             </div>
             <Button variant="ghost" size="sm" onClick={onReset} className="shrink-0 text-xs sm:text-sm">
@@ -485,7 +484,7 @@ function MenuScreen({ stats, onStart, onReset }: { stats: Stats; onStart: (lengt
             <StatCell label="নির্ভুলতা" value={`${lifetimeAcc}%`} />
             <StatCell label="স্ট্রিক" longLabel="সেরা স্ট্রিক" value={stats.bestStreak} tone="success" />
           </div>
-        </Card>
+        </div>
       </section>
 
       <SiteFooter onStart={() => onStart(20)} />
