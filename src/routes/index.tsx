@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import vocabRaw from "../data/vocabulary.json";
 import { arabicMatches } from "../lib/arabic";
+import { playCorrectSound, playWrongSound } from "../lib/sounds";
 import { useSpeechRecognition } from "../lib/useSpeechRecognition";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
@@ -153,7 +154,12 @@ function QuizPage() {
         wrongIds,
       };
     });
-    if (ok) speak(word.arabic);
+    if (ok) {
+      playCorrectSound();
+      speak(word.arabic);
+    } else {
+      playWrongSound();
+    }
   }
 
   function nextQuestion() {
@@ -178,6 +184,7 @@ function QuizPage() {
 
   function skip() {
     if (feedback || !mode) return;
+    playWrongSound();
     setFeedback({ ok: false });
     const id = queue[questionIndex];
     setSession((s) => ({ ...s, incorrect: s.incorrect + 1, streak: 0 }));
@@ -322,20 +329,20 @@ function MenuScreen({ stats, onStart, onReset }: { stats: Stats; onStart: (lengt
     <div className="min-h-dvh">
       {/* Hero */}
       <section
-        className="relative overflow-hidden px-3 pb-12 pt-8 sm:px-4 sm:pb-16 sm:pt-12 md:pb-20 md:pt-16"
+        className="relative overflow-hidden px-3 pb-12 pt-6 sm:px-4 sm:pb-16 sm:pt-8 md:pb-20 md:pt-10 lg:px-8 xl:px-12"
         style={{ background: "var(--gradient-hero)" }}
       >
         <div className="pointer-events-none absolute inset-0 opacity-[0.12]" aria-hidden>
-          <p className="font-arabic absolute -right-4 top-6 text-[8rem] leading-none text-primary-foreground sm:text-[10rem] md:text-[14rem]">
+          <p className="font-arabic absolute -right-6 top-8 text-[7rem] leading-none text-primary-foreground sm:-right-8 sm:top-10 sm:text-[9rem] lg:-right-4 lg:top-12 lg:text-[11rem] xl:text-[14rem]">
             عربي
           </p>
         </div>
 
-        <div className="relative mx-auto w-full max-w-5xl">
-          <nav className="mb-8 flex flex-wrap items-center justify-between gap-3 sm:mb-10">
-            <SiteLogo />
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-              <div className="hidden items-center gap-4 text-sm text-primary-foreground/80 min-[480px]:flex">
+        <div className="relative mx-auto w-full max-w-6xl xl:max-w-7xl">
+          <nav className="relative z-10 mb-8 flex w-full flex-nowrap items-center justify-between gap-4 sm:mb-10 lg:mb-12">
+            <SiteLogo className="h-14 w-14 shrink-0 sm:h-16 sm:w-16 lg:h-[4.5rem] lg:w-[4.5rem]" />
+            <div className="flex shrink-0 items-center gap-3 sm:gap-4 lg:gap-6">
+              <div className="hidden items-center gap-5 text-sm text-primary-foreground/85 min-[480px]:flex lg:gap-8 lg:text-base">
                 <a href="#features" className="transition hover:text-primary-foreground">বৈশিষ্ট্য</a>
                 <a href="#how-it-works" className="transition hover:text-primary-foreground">পদ্ধতি</a>
                 <a href="#quizzes" className="transition hover:text-primary-foreground">কুইজ</a>
@@ -349,7 +356,7 @@ function MenuScreen({ stats, onStart, onReset }: { stats: Stats; onStart: (lengt
             </div>
           </nav>
 
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="relative z-10 mx-auto max-w-2xl text-center lg:max-w-3xl">
             <p className="font-arabic text-sm tracking-wide text-primary-foreground/80 sm:text-base" dir="rtl">
               بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
             </p>
